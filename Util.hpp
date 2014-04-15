@@ -20,6 +20,11 @@ class Func {
             return result;
         }
 
+        // a syntax sugar
+        static std::vector<int> Range(int end) {
+            return Range(0, end);
+        }
+
         template<typename TIn, typename TOut>
             static std::vector<TOut> Map(const std::vector<TIn> &in, std::function<TOut(TIn)> f) {
                 std::vector<TOut> result(in.size());

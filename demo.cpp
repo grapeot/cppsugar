@@ -5,7 +5,7 @@
 using namespace std;
 
 int main() {
-    auto vec = Func::Range(0, 20);
+    auto vec = Func::Range(20);
     // select the even numbers
     vec = Func::Filter<int>(vec, [](int v) { return v % 2 == 0; });
     // compute the square
