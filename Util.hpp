@@ -23,6 +23,25 @@ class Func {
                 return result;
             }
 
+
+        template<typename TIn, typename TOut>
+            static TOut Reduce(const std::vector<TIn> &in, std::function<TOut(TIn, TIn)> f, TIn init) {
+                for (auto t : in) {
+                    init = f(init, t);
+                }
+                return init;
+            }
+
+        template<typename TIn>
+            static TIn Sum(const std::vector<TIn> &in) {
+                return Reduce<TIn, TIn>(in, [](const TIn &a, const TIn &b) { return a + b; }, TIn());
+            }
+
+        template<typename TIn>
+            static TIn Max(const std::vector<TIn> &in) {
+                return Reduce<TIn, TIn>(in, [](const TIn &a, const TIn &b) { return a > b ? a : b; }, TIn());
+            }
+
         template<typename TIn, typename TOut>
             static std::vector<TOut> Zip(const std::vector<TIn> &in1, const std::vector<TIn> &in2, std::function<TOut(TIn, TIn)> f) {
                 if (in1.size() != in2.size()) {
