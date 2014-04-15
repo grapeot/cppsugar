@@ -1,10 +1,14 @@
 #pragma once
 
-#include<vector>
-#include<string>
-#include<functional>
-#include<algorithm>
-#include<numeric>
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include <stdexcept>
+#include <vector>
+#include <string>
+#include <functional>
+#include <algorithm>
+#include <numeric>
 
 // some syntax sugar for easier functional programming in C++ 11
 class Func {
@@ -45,10 +49,10 @@ class Func {
         template<typename TIn, typename TOut>
             static std::vector<TOut> Zip(const std::vector<TIn> &in1, const std::vector<TIn> &in2, std::function<TOut(TIn, TIn)> f) {
                 if (in1.size() != in2.size()) {
-                    throw exception("Inconsistent size.");
+                    throw std::runtime_error("Inconsistent size.");
                 }
                 std::vector<TOut> result(in1.size());
-                for (size_t i = 0; i < in.size(); i++) {
+                for (size_t i = 0; i < in1.size(); i++) {
                     result[i] = f(in1[i], in2[i]);
                 }
                 return result;
@@ -60,7 +64,7 @@ class Func {
                 result.reserve(in.size());
                 for (auto i : in) {
                     if (f(i)) {
-                        result.push_back();
+                        result.push_back(i);
                     }
                 }
                 return result;
@@ -74,37 +78,37 @@ class Util {
     public:
         template<typename T1, typename T2>
             static std::string Print(T1 a, T2 b) {
-                stringstream ss;
+                std::stringstream ss;
                 ss << a << b;
                 return ss.str();
             }
 
         template<typename T1, typename T2, typename T3>
             static std::string Print(T1 a, T2 b, T3 c) {
-                stringstream ss;
+                std::stringstream ss;
                 ss << a << b << c;
                 return ss.str();
             }
 
         template<typename T1, typename T2, typename T3, typename T4>
             static std::string Print(T1 a, T2 b, T3 c, T4 d) {
-                stringstream ss;
+                std::stringstream ss;
                 ss << a << b << c << d;
                 return ss.str();
             }
 
         template<typename T1, typename T2, typename T3, typename T4, typename T5>
             static std::string Print(T1 a, T2 b, T3 c, T4 d, T5 e) {
-                stringstream ss;
+                std::stringstream ss;
                 ss << a << b << c << d << e;
                 return ss.str();
             }
 
         template<typename T>
             static void WriteAllBytesToFile(const std::string &fn, const std::vector<T> &vec) {
-                ofstream ofs(fn, ios::binary);
+                std::ofstream ofs(fn, std::ios::binary);
                 if (!ofs) {
-                    throw exception("Cannot open file.");
+                    throw std::runtime_error("Cannot open file.");
                 }
                 ofs.write((char *)&vec[0], sizeof(T)* vec.size());
                 ofs.close();
@@ -113,7 +117,7 @@ class Util {
         static void WriteAllLinesToFile(const std::string &fn, const std::vector<std::string> &lines) {
             std::ofstream ofs(fn);
             if (!ofs) {
-                throw std::exception("Cannot open file.");
+                throw std::runtime_error("Cannot open file.");
             }
             for (auto line : lines) {
                 ofs << line << std::endl;
@@ -125,11 +129,11 @@ class Util {
             static void VisualizeMatrix(const std::vector<T> &mat, int height, int width, 
                     const std::string &dtype = "float32", const std::string &fn = std::string("tmp.dat")) {
                 if (mat.size() != height * width) {
-                    throw exception("Inconsistent size.");
+                    throw std::runtime_error("Inconsistent size.");
                 }
                 WriteAllBytesToFile(fn, mat);
 
-                stringstream ss;
+                std::stringstream ss;
                 ss << "python -c \"import numpy; import pylab; a = numpy.fromfile('"
                     << fn << "', dtype='" << dtype << "');" 
                     << "pylab.imshow(numpy.reshape(a, ("
