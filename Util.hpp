@@ -11,71 +11,69 @@
 #include <numeric>
 
 // some syntax sugar for easier functional programming in C++ 11
-class Func {
-    public:
-        // Similar to python's range
-        static std::vector<int> Range(int start, int end) {
-            std::vector<int> result(end - start);
-            std::iota(result.begin(), result.end(), start);
+namespace func {
+    // Similar to python's range
+    std::vector<int> Range(int start, int end) {
+        std::vector<int> result(end - start);
+        std::iota(result.begin(), result.end(), start);
+        return result;
+    }
+
+    // a syntax sugar
+    std::vector<int> Range(int end) {
+        return Range(0, end);
+    }
+
+    template<typename TIn, typename TOut>
+        std::vector<TOut> Map(const std::vector<TIn> &in, std::function<TOut(TIn)> f) {
+            std::vector<TOut> result(in.size());
+            std::transform(in.begin(), in.end(), result.begin(), f);
             return result;
         }
 
-        // a syntax sugar
-        static std::vector<int> Range(int end) {
-            return Range(0, end);
+
+    template<typename TIn, typename TOut>
+        TOut Reduce(const std::vector<TIn> &in, std::function<TOut(TIn, TIn)> f, TIn init) {
+            for (auto t : in) {
+                init = f(init, t);
+            }
+            return init;
         }
 
-        template<typename TIn, typename TOut>
-            static std::vector<TOut> Map(const std::vector<TIn> &in, std::function<TOut(TIn)> f) {
-                std::vector<TOut> result(in.size());
-                std::transform(in.begin(), in.end(), result.begin(), f);
-                return result;
+    template<typename TIn>
+        TIn Sum(const std::vector<TIn> &in) {
+            return Reduce<TIn, TIn>(in, [](const TIn &a, const TIn &b) { return a + b; }, TIn());
+        }
+
+    template<typename TIn>
+        TIn Max(const std::vector<TIn> &in) {
+            return Reduce<TIn, TIn>(in, [](const TIn &a, const TIn &b) { return a > b ? a : b; }, TIn());
+        }
+
+    template<typename TIn, typename TOut>
+        std::vector<TOut> Zip(const std::vector<TIn> &in1, const std::vector<TIn> &in2, std::function<TOut(TIn, TIn)> f) {
+            if (in1.size() != in2.size()) {
+                throw std::runtime_error("Inconsistent size.");
             }
+            std::vector<TOut> result(in1.size());
+            for (size_t i = 0; i < in1.size(); i++) {
+                result[i] = f(in1[i], in2[i]);
+            }
+            return result;
+        }
 
-
-        template<typename TIn, typename TOut>
-            static TOut Reduce(const std::vector<TIn> &in, std::function<TOut(TIn, TIn)> f, TIn init) {
-                for (auto t : in) {
-                    init = f(init, t);
+    template<typename T>
+        std::vector<T> Filter(const std::vector<T> &in, const std::function<bool(T)> f) {
+            std::vector<T> result;
+            result.reserve(in.size());
+            for (auto i : in) {
+                if (f(i)) {
+                    result.push_back(i);
                 }
-                return init;
             }
-
-        template<typename TIn>
-            static TIn Sum(const std::vector<TIn> &in) {
-                return Reduce<TIn, TIn>(in, [](const TIn &a, const TIn &b) { return a + b; }, TIn());
-            }
-
-        template<typename TIn>
-            static TIn Max(const std::vector<TIn> &in) {
-                return Reduce<TIn, TIn>(in, [](const TIn &a, const TIn &b) { return a > b ? a : b; }, TIn());
-            }
-
-        template<typename TIn, typename TOut>
-            static std::vector<TOut> Zip(const std::vector<TIn> &in1, const std::vector<TIn> &in2, std::function<TOut(TIn, TIn)> f) {
-                if (in1.size() != in2.size()) {
-                    throw std::runtime_error("Inconsistent size.");
-                }
-                std::vector<TOut> result(in1.size());
-                for (size_t i = 0; i < in1.size(); i++) {
-                    result[i] = f(in1[i], in2[i]);
-                }
-                return result;
-            }
-
-        template<typename T>
-            static std::vector<T> Filter(const std::vector<T> &in, const std::function<bool(T)> f) {
-                std::vector<T> result;
-                result.reserve(in.size());
-                for (auto i : in) {
-                    if (f(i)) {
-                        result.push_back(i);
-                    }
-                }
-                return result;
-            }
-
-};
+            return result;
+        }
+}
 
 // the class to provide some utility functions.
 // some global configurations are also put in this file.
