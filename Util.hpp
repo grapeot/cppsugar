@@ -62,7 +62,7 @@ namespace func {
 
     template<typename TIn>
         static TIn Sum(const std::vector<TIn> &in) {
-            return Reduce<TIn, TIn>(in, [](const TIn &a, const TIn &b) { return a + b; }, TIn());
+            return Reduce<TIn, TIn>(in, [](const TIn &a, const TIn &b) { return a + b; });
         }
 
     template<typename TIn>
@@ -248,7 +248,7 @@ namespace util {
         int greenLength = yellowCount - greenCount;
         int whiteLength = greenCount;
         if (val >= yellowCount) {
-            int green = (int)(0xff - (val - yellowCount) * 0xff / yellowLength);
+            unsigned char green = (int)(0xff - (val - yellowCount) * 0xff / yellowLength);
             return RGB{ 0xff, green, 0 };
         }
         else if (val >= greenCount) {
