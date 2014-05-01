@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "Util.hpp"
+#include "cppsugar"
 
 using namespace std;
 using namespace func;
