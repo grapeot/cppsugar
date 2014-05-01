@@ -10,7 +10,7 @@ nuget{
         description: @"A syntax sugar library for C++, especially providing LINQ-like ease for functional programming.";
         releaseNotes: "Refactor the code structure, add more functions, and add a test utility in github.";
         copyright: Copyright 2014;
-        tags: { native, syntaxsugar, functional };
+        tags: { native, syntaxsugar, functional, linq };
     };
 
     files {
