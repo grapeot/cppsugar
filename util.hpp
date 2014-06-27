@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <string>
 
 namespace util {
     template<typename T>
@@ -17,6 +18,21 @@ namespace util {
             ifs.close();
             return result;
         }
+
+    static std::vector<std::string> ReadAllLinesFromFile(const std::string &fn) {
+        std::vector<std::string> result;
+        ifstream ifs(fn);
+        if (!ifs) {
+            throw std::runtime_error("Cannot open file!");
+        }
+        string tmp;
+        while (ifs) {
+            ifs >> tmp;
+            result.push_back(tmp);
+        }
+        result.erase(result.end() - 1);    // a weird behavior of c++
+        return result;
+    }
 
     template<typename T1>
         static std::string Print(T1 a) {
