@@ -4,8 +4,10 @@
 
 using namespace std;
 using namespace func;
+using namespace util;
 
 int main() {
+    // some func usage
     auto vec = Range(20);
     // select the even numbers
     vec = Filter<int>(vec, [](int v) { return v % 2 == 0; });
@@ -20,6 +22,12 @@ int main() {
         << "The minimum element is: " << Min(vec) << endl
         << "The sum is: " << Sum(vec) << endl
         << "The max of square is: " << Max<int, int>(vec, [](int x) { return x * x; }) << endl;
+
+    // some util usage
+    auto lines = ReadAllLinesFromFile("demo.cpp");
+    for (auto l : lines) {
+        cout << l << endl;
+    }
     
     return 0;
 }

@@ -21,13 +21,13 @@ namespace util {
 
     static std::vector<std::string> ReadAllLinesFromFile(const std::string &fn) {
         std::vector<std::string> result;
-        ifstream ifs(fn);
+        std::ifstream ifs(fn);
         if (!ifs) {
             throw std::runtime_error("Cannot open file!");
         }
-        string tmp;
+        std::string tmp;
         while (ifs) {
-            ifs >> tmp;
+            std::getline(ifs, tmp);
             result.push_back(tmp);
         }
         result.erase(result.end() - 1);    // a weird behavior of c++
