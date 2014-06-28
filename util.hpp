@@ -99,6 +99,17 @@ namespace util {
         ofs.close();
     }
 
+    // Replace the `from` within `str` to `to`. 
+    // Return true if found, otherwise false.
+	static bool Replace(std::string& str, const std::string& from, const std::string& to) 
+	{
+		size_t start_pos = str.find(from);
+		if(start_pos == std::string::npos)
+			return false;
+		str.replace(start_pos, from.length(), to);
+		return true;
+	}
+
     template<typename T>
         static void VisualizeMatrix(const std::vector<T> &mat, int height, int width,
                 const std::string &imgfn = "",

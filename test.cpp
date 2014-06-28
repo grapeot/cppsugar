@@ -1,10 +1,12 @@
 // unit test file for the func namespace
 
 #include <iostream>
+#include <string>
 #include "cppsugar"
 
 using namespace std;
 using namespace func;
+using namespace util;
 
 template<typename T>
 bool IsEqual(const vector<T> &a, const vector<T> &b) {
@@ -42,6 +44,17 @@ int main() {
     cout << "[PASS] Min/Max and ArgMin/ArgMax passed." << endl;
 
     // test chain
+
+    // test string replace
+   string str = "shability";
+   Replace(str, "sha", "niu");
+   if (str.compare("niubility")) {
+       cout << "[FAIL] String replacement test failed." << endl; 
+       return -1;
+   }
+   else {
+       cout << "[PASS] String replacement test passed." << endl;
+   }
 
     cout << "[PASS] All passed!" << endl;
 
