@@ -61,6 +61,11 @@ namespace func {
             return Reduce<TIn, TIn>(in, [](const TIn &a, const TIn &b) { return a + b; });
         }
 
+    template<typename TIn, typename TOut>
+         TOut Sum(const std::vector<TIn> &in, std::function<TOut(TIn)> f) {
+             return Sum(Map<TIn, TOut>(in, f));
+        }
+
     template<typename TIn>
          TIn Average(const std::vector<TIn> &in) {
             return Sum(in) / in.size();
