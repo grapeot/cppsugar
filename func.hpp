@@ -46,16 +46,6 @@ namespace func {
             return init;
         }
 
-    template<typename T>
-         bool Any(const std::vector<T> &in, std::function<bool(const T &)> f) {
-            for (auto i : in) {
-                if (f(i)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
     template<typename TIn>
          TIn Sum(const std::vector<TIn> &in) {
             return Reduce<TIn, TIn>(in, [](const TIn &a, const TIn &b) { return a + b; });
@@ -175,6 +165,22 @@ namespace func {
             }
             return count;
         }
+    
+    template<typename T>
+         bool Any(const std::vector<T> &in, std::function<bool(const T &)> f) {
+            for (auto i : in) {
+                if (f(i)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+    template<typename T>
+         bool All(const std::vector<T> &in, const std::function<bool(T)> f) {
+             return Count<T>(in, f) != 0;
+        }
+    
 };
 
 #endif
