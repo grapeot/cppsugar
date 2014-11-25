@@ -178,7 +178,7 @@ namespace func {
 
     template<typename T>
          bool All(const std::vector<T> &in, const std::function<bool(T)> f) {
-             return Count<T>(in, f) != 0;
+             return Count<T>(in, f) != in.size();
         }
     
 };
