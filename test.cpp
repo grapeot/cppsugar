@@ -46,15 +46,19 @@ int main() {
     // test chain
 
     // test string replace
-   string str = "shability";
-   Replace(str, "sha", "niu");
-   if (str.compare("niubility")) {
-       cout << "[FAIL] String replacement test failed." << endl; 
-       return -1;
-   }
-   else {
-       cout << "[PASS] String replacement test passed." << endl;
-   }
+    string str = "shability";
+    Replace(str, "sha", "niu");
+    if (str.compare("niubility")) {
+        cout << "[FAIL] String replacement test failed." << endl; 
+        return -1;
+    }
+    else {
+        cout << "[PASS] String replacement test passed." << endl;
+    }
+
+    // test print
+    cout << Print("var = ", 2) << endl;
+    cout << Print("var = ", 2, ", var2 = ", 3.0) << endl;
 
     cout << "[PASS] All passed!" << endl;
 

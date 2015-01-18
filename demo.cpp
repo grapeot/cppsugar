@@ -24,6 +24,7 @@ int main() {
         << "The max of square is: " << Max<int, int>(vec, [](int x) { return x * x; }) << endl;
 
     // some util usage
+    cout << Print("var = ", 2, ", var2 = ", 3.0) << endl << endl;
     auto lines = ReadAllLinesFromFile("demo.cpp");
     for (auto l : lines) {
         cout << l << endl;

@@ -34,39 +34,22 @@ namespace util {
         return result;
     }
 
-    template<typename T1>
-        static std::string Print(T1 a) {
-            std::stringstream ss;
-            ss << a;
-            return ss.str();
+    template<typename T, typename... Ts>
+        static void Print(std::stringstream &os, const T &first) {
+            os << first;
         }
 
-    template<typename T1, typename T2>
-        static std::string Print(T1 a, T2 b) {
-            std::stringstream ss;
-            ss << a << b;
-            return ss.str();
+    template<typename T, typename... Ts>
+        static std::string Print(std::stringstream &os, const T &first, Ts... args) {
+            os << first;
+            Print(os, args...);
+            return os.str();
         }
 
-    template<typename T1, typename T2, typename T3>
-        static std::string Print(T1 a, T2 b, T3 c) {
+    template<typename T, typename... Ts>
+        static std::string Print(T first, Ts... args) {
             std::stringstream ss;
-            ss << a << b << c;
-            return ss.str();
-        }
-
-    template<typename T1, typename T2, typename T3, typename T4>
-        static std::string Print(T1 a, T2 b, T3 c, T4 d) {
-            std::stringstream ss;
-            ss << a << b << c << d;
-            return ss.str();
-        }
-
-    template<typename T1, typename T2, typename T3, typename T4, typename T5>
-        static std::string Print(T1 a, T2 b, T3 c, T4 d, T5 e) {
-            std::stringstream ss;
-            ss << a << b << c << d << e;
-            return ss.str();
+            return Print(ss, first, args...);
         }
 
     template<typename T>
@@ -101,14 +84,14 @@ namespace util {
 
     // Replace the `from` within `str` to `to`. 
     // Return true if found, otherwise false.
-	static bool Replace(std::string& str, const std::string& from, const std::string& to) 
-	{
-		size_t start_pos = str.find(from);
-		if(start_pos == std::string::npos)
-			return false;
-		str.replace(start_pos, from.length(), to);
-		return true;
-	}
+    static bool Replace(std::string& str, const std::string& from, const std::string& to) 
+    {
+        size_t start_pos = str.find(from);
+        if(start_pos == std::string::npos)
+            return false;
+        str.replace(start_pos, from.length(), to);
+        return true;
+    }
 
     template<typename T>
         static void VisualizeMatrix(const std::vector<T> &mat, int height, int width,
