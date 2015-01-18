@@ -13,10 +13,10 @@ int main() {
     vec = Filter<int>(vec, [](int v) { return v % 2 == 0; });
     // compute x * (20 - x)
     vec = Map<int, int>(vec, [](int v) { return v * (20 - v); });
-    for (auto v : vec) cout << v << endl;
+    cout << vec << endl;
     // unique!
     cout << endl;
-    for (auto v : Unique(vec)) cout << v << endl;
+    cout << Unique(vec) << endl;
     // min/max/sum
     cout << endl
         << "The minimum element is: " << Min(vec) << endl

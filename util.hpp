@@ -34,6 +34,14 @@ namespace util {
         return result;
     }
 
+    template<typename T>
+        static std::ostream &operator<<(std::ostream &os, const std::vector<T> &vec) {
+            os << "[ ";
+            for (auto v: vec) os << v << ' ';
+            os << "]";
+            return os;
+        }
+
     template<typename T, typename... Ts>
         static void Print(std::stringstream &os, const T &first) {
             os << first;
